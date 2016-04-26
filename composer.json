@@ -2,6 +2,7 @@
   "name": "binarystash/pdf-watermarker",
   "description": "Adds image watermarks to PDF files",
   "require": {
+    "php": ">=5.3.3",
     "binarystash/fpdf": "dev-master",
     "setasign/fpdi": "1.4.2"
   },
