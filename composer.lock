@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "77ee4604dacc84214f32ef46bf6c52aa",
-    "content-hash": "3dbbf894b923ea64eb55dac39c16a673",
+    "hash": "d3369541f5cd35d44eca0d5d695371e3",
+    "content-hash": "ab3072168f6c688ea1fbaa72d9516ff0",
     "packages": [
         {
             "name": "binarystash/fpdf",
@@ -3741,5 +3741,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": {
+        "ext-gd": "*"
+    }
 }
