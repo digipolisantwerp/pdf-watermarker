@@ -160,7 +160,13 @@ class PDFWatermarker {
 	 * @return array - coordinates of the watermark's position
 	 */
 	private function _calculateWatermarkCoordinates( $wWidth, $wHeight, $tWidth, $tHeight ) {
-		
+
+        $position = $this->_watermark->getPosition();
+
+        if (is_array($position)) {
+            return $position;
+        }
+
 		switch( $this->_watermark->getPosition() ) {
 			case 'topleft': 
 				$x = 0;
