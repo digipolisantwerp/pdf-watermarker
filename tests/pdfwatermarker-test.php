@@ -96,7 +96,6 @@ class PDFWatermarker_test extends PHPUnit_Framework_TestCase
         $position = [$x, $y];
         $this->watermark->setPosition($position);
         $this->watermarker->savePdf();
-        die;
         $this->assertTrue( file_exists($this->output) === true );
         $this->assertTrue( filesize($this->parent_directory.'/../assets/output-custom-position.pdf') === filesize($this->output) );
     }
