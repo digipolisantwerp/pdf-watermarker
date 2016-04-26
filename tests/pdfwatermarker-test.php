@@ -89,5 +89,15 @@ class PDFWatermarker_test extends PHPUnit_Framework_TestCase
         $this->assertTrue( file_exists($this->output_multiple) === true );
 		$this->assertTrue( filesize($this->parent_directory.'/../assets/output-multipage.pdf') === filesize($this->output_multiple) );
     }
-	
+
+    public function testCustomPosition() {
+        $x = 50;
+        $y = 100;
+        $position = [$x, $y];
+        $this->watermark->setPosition($position);
+        $this->watermarker->savePdf();
+        die;
+        $this->assertTrue( file_exists($this->output) === true );
+        $this->assertTrue( filesize($this->parent_directory.'/../assets/output-custom-position.pdf') === filesize($this->output) );
+    }
 }
