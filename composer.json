@@ -1,20 +1,21 @@
 {
-  "name": "binarystash/pdf-watermarker",
-  "description": "Adds image watermarks to PDF files",
-  "require": {
-    "php": ">=5.3.3",
-    "binarystash/fpdf": "dev-master",
-    "setasign/fpdi": "1.4.2"
-  },
-  "require-dev": {
-    "ext-gd": "*",
-    "phpunit/phpunit": "4.*",
-    "phpdocumentor/phpdocumentor": "2.*",
-    "evert/phpdoc-md" : "~0.0.7"
-  },
-  "autoload": {
-    "classmap": [
-      "pdfwatermarker/"
-    ]
-  }
+    "name": "binarystash/pdf-watermarker",
+    "description": "Adds image watermarks to PDF files",
+    "require": {
+        "php": ">=5.3.3",
+        "binarystash/fpdf": "dev-master",
+        "setasign/fpdi": "~1.6.1",
+        "setasign/fpdi-fpdf": "~1.6.1"
+    },
+    "require-dev": {
+        "ext-gd": "*",
+        "phpunit/phpunit": "4.*",
+        "phpdocumentor/phpdocumentor": "2.*",
+        "evert/phpdoc-md": "~0.0.7"
+    },
+    "autoload": {
+        "classmap": [
+            "pdfwatermarker/"
+        ]
+    }
 }
