@@ -106,9 +106,7 @@ class PDFWatermarker {
 			$orientation = "P";
 		}
 
-	    $this->_tempPdf->DefOrientation = $orientation;
-
-		$this->_tempPdf->addPage($orientation,array($templateDimension['w'],$templateDimension['h']));
+		$this->_tempPdf->AddPage($orientation,array($templateDimension['w'],$templateDimension['h']));
 		
 	}
 	
