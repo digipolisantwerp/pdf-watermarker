@@ -4,44 +4,47 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5c6fbd2886a70060d4770057f22e1f2f",
-    "content-hash": "64258f8da57f5a0520ef4021ac8043e6",
+    "hash": "b66d22bfa2c5504391ad35abf6dfcd09",
+    "content-hash": "5b17a789b24a304a10501568067aafc5",
     "packages": [
         {
-            "name": "binarystash/fpdf",
-            "version": "dev-master",
+            "name": "setasign/fpdf",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/binarystash/fpdf.git",
-                "reference": "5f71609989837852fb03f1d8f54f924895fc619d"
+                "url": "https://github.com/Setasign/FPDF.git",
+                "reference": "2c68c9e6c034ac3187d25968790139a73184cdb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/binarystash/fpdf/zipball/5f71609989837852fb03f1d8f54f924895fc619d",
-                "reference": "5f71609989837852fb03f1d8f54f924895fc619d",
+                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/2c68c9e6c034ac3187d25968790139a73184cdb1",
+                "reference": "2c68c9e6c034ac3187d25968790139a73184cdb1",
                 "shasum": ""
             },
-            "require": {
-                "php": ">=4.3.10"
-            },
             "type": "library",
+            "autoload": {
+                "classmap": [
+                    "fpdf.php"
+                ]
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Free"
+                "no usage restriction"
             ],
             "authors": [
                 {
-                    "name": "FPDF.org",
-                    "role": "Developer"
+                    "name": "Olivier Plathey",
+                    "email": "oliver@fpdf.org",
+                    "homepage": "http://fpdf.org/"
                 }
             ],
-            "description": "A PHP class that generates PDF files without dependency on other PHP libraries",
-            "homepage": "http://www.fpdf.org/",
+            "description": "FPDF is a PHP class which allows to generate PDF files with pure PHP. F from FPDF stands for Free: you may use it for any kind of usage and modify it to suit your needs.",
+            "homepage": "http://www.fpdf.org",
             "keywords": [
-                "pdf",
-                "pdf generate"
+                "fpdf",
+                "pdf"
             ],
-            "time": "2015-04-17 23:36:42"
+            "time": "2016-01-01 17:47:15"
         },
         {
             "name": "setasign/fpdi",
@@ -91,6 +94,50 @@
                 "pdf"
             ],
             "time": "2015-11-30 10:53:14"
+        },
+        {
+            "name": "setasign/fpdi-fpdf",
+            "version": "1.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/FPDI-FPDF.git",
+                "reference": "212a0d58c656b56925fd44669619a69dac85ac2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/FPDI-FPDF/zipball/212a0d58c656b56925fd44669619a69dac85ac2c",
+                "reference": "212a0d58c656b56925fd44669619a69dac85ac2c",
+                "shasum": ""
+            },
+            "require": {
+                "setasign/fpdf": "1.8.*",
+                "setasign/fpdi": "1.6.*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "fpdi_bridge.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Slabon",
+                    "email": "jan.slabon@setasign.com",
+                    "homepage": "https://www.setasign.com"
+                }
+            ],
+            "description": "Kind of metadata package for dependencies of the latest versions of FPDI and FPDF.",
+            "homepage": "https://www.setasign.com/fpdi",
+            "keywords": [
+                "fpdf",
+                "fpdi",
+                "pdf"
+            ],
+            "time": "2015-11-30 11:10:35"
         }
     ],
     "packages-dev": [
@@ -3699,9 +3746,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "binarystash/fpdf": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

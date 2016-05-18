@@ -4,8 +4,7 @@
     "type":"library",
     "require": {
         "php": ">=5.3.3",
-        "binarystash/fpdf": "dev-master",
-        "setasign/fpdi": "1.6.*"
+        "setasign/fpdi-fpdf": "1.6.1"
     },
     "require-dev": {
         "ext-gd": "*",
