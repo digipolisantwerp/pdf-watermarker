@@ -2,7 +2,7 @@
 
 $parent_directory = dirname(__FILE__);
 
-require_once($parent_directory."/../vendor/binarystash/fpdf/fpdf.php");
+require_once($parent_directory."/../vendor/setasign/fpdf/fpdf.php");
 require_once($parent_directory."/../vendor/setasign/fpdi/fpdi.php");
 require_once($parent_directory."/../pdfwatermarker/pdfwatermark.php");
 

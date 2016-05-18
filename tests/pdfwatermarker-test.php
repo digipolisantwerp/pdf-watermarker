@@ -2,120 +2,116 @@
 
 $parent_directory = dirname(__FILE__);
 
-require_once($parent_directory."/../vendor/binarystash/fpdf/fpdf.php");
-require_once($parent_directory."/../vendor/setasign/fpdi/fpdi.php");
-require_once($parent_directory."/../pdfwatermarker/pdfwatermarker.php");
-require_once($parent_directory."/../pdfwatermarker/pdfwatermark.php");
+require_once($parent_directory . "/../vendor/setasign/fpdf/fpdf.php");
+require_once($parent_directory . "/../vendor/setasign/fpdi/fpdi.php");
+require_once($parent_directory . "/../pdfwatermarker/pdfwatermarker.php");
+require_once($parent_directory . "/../pdfwatermarker/pdfwatermark.php");
 
+/**
+ * Class PDFWatermarker_test
+ */
 class PDFWatermarker_test extends PHPUnit_Framework_TestCase
 {
     /** @var PDFWatermark */
     public $watermark;
 
-    /** @var PDFWatermarker  */
+    /** @var PDFWatermarker */
     public $watermarker;
 
-    /** @var PDFWatermarker  */
-    public $watermarker_multiple;
+    /** @var string */
+    public $outputFile;
 
-    public $output;
-	public $output_multiple;
-	public $parent_directory;
+    /** @var string */
+    public $parentDirectory;
 
+    /**
+     * Set to true in case you want to regenerate reference output files
+     *
+     * @var bool
+     */
+    protected $createReference = false;
+
+    /**
+     * @inheritdoc
+     */
     public function setUp()
     {
         parent::setUp();
 
-		$this->parent_directory = dirname(__FILE__);
-		
-        $this->watermark = new PDFWatermark($this->parent_directory.'/../assets/star.png');
-
-        $this->output = $this->parent_directory ."/../assets/test-output.pdf";
-		$this->output_multiple = $this->parent_directory ."/../assets/test-output-multiple.pdf";
-
-        $this->watermarker = new PDFWatermarker($this->parent_directory.'/../assets/test.pdf', $this->output, $this->watermark); 
-		$this->watermarker_multiple = new PDFWatermarker($this->parent_directory.'/../assets/test-multipage.pdf', $this->output_multiple, $this->watermark); 
+        $this->parentDirectory = dirname(__FILE__);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function tearDown()
     {
         parent::tearDown();
 
-        if (file_exists($this->output)) {
-            unlink($this->output);
+        if (!$this->createReference) {
+            if (file_exists($this->outputFile)) {
+                unlink($this->outputFile);
+            }
         }
-        if (file_exists($this->output_multiple)) {
-            unlink($this->output_multiple);
+    }
+
+    /**
+     * @return array
+     */
+    public function dataProvider()
+    {
+        return [
+            ['output-default-position', null],
+            ['output-from-jpg', null, 'jpg'],
+            ['output-as-background', null, 'png', true],
+            ['output-specific-pages', null, 'png', false, [3, 5]],
+            ['output-topright-position', 'topright'],
+            ['output-topleft-position', 'topleft'],
+            ['output-bottomright-position', 'bottomright'],
+            ['output-bottomleft-position', 'bottomleft'],
+            ['output-custom-position', [50, 100]],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProvider
+     *
+     * @param        $filename
+     * @param        $position
+     * @param string $watermarkType
+     * @param bool   $asBackground
+     * @param array  $pageRange
+     */
+    public function testWatermark($filename, $position, $watermarkType = 'png', $asBackground = false, $pageRange = [])
+    {
+        $reference = $this->parentDirectory . '/../assets/' . $filename . '.pdf';
+        $inputFile = $this->parentDirectory . '/../assets/test' . (count($pageRange) ? '-multipage' : '') . '.pdf';
+        $this->outputFile = $this->parentDirectory . '/../assets/test-output.pdf';
+
+        if ($this->createReference) {
+            $this->outputFile = $reference;
+            if (file_exists($reference)) {
+                unlink($reference);
+            }
         }
-    }
 
-    public function testDefaultOptions() {
+        $watermark = new PDFWatermark($this->parentDirectory . '/../assets/star.' . $watermarkType);
+        if ($asBackground) {
+            $watermark->setAsBackground();
+        }
+        if (!is_null($position)) {
+            $watermark->setPosition($position);
+        }
+        $waterMarker = new PDFWatermarker($inputFile, $this->outputFile, $watermark);
+        if (count($pageRange)) {
+            $waterMarker->setPageRange($pageRange[0], $pageRange[1]);
+        }
+        $waterMarker->savePdf();
 
-        $this->watermarker->savePdf();
-        $this->assertTrue( file_exists($this->output) === true );
-		$this->assertTrue( filesize($this->parent_directory.'/../assets/output-default-position.pdf') === filesize($this->output) );
-    }
-	
-    public function testDefaultOptionsWithJPG() {
+        $this->assertTrue(file_exists($this->outputFile) === true);
 
-		$watermark_jpg = new PDFWatermark($this->parent_directory.'/../assets/star.jpg');
-		$watermarker_jpg = new PDFWatermarker($this->parent_directory.'/../assets/test.pdf', $this->output, $watermark_jpg);
-
-        $watermarker_jpg->savePdf();
-        $this->assertTrue( file_exists($this->output) === true );
-		$this->assertTrue( filesize($this->parent_directory.'/../assets/output-from-jpg.pdf') === filesize($this->output) );
-
-    }
-
-    public function testTopRightPosition() {
-		$this->watermark->setPosition('topright');
-        $this->watermarker->savePdf();
-        $this->assertTrue( file_exists($this->output) === true );
-		$this->assertTrue( filesize($this->parent_directory.'/../assets/output-topright-position.pdf') === filesize($this->output) );
-    }
-
-    public function testTopLeftPosition() {
-		$this->watermark->setPosition('topleft');
-        $this->watermarker->savePdf();
-        $this->assertTrue( file_exists($this->output) === true );
-		$this->assertTrue( filesize($this->parent_directory.'/../assets/output-topleft-position.pdf') === filesize($this->output) );
-    }
-
-    public function testBottomRightPosition() {
-		$this->watermark->setPosition('bottomright');
-        $this->watermarker->savePdf();
-        $this->assertTrue( file_exists($this->output) === true );
-		$this->assertTrue( filesize($this->parent_directory.'/../assets/output-bottomright-position.pdf') === filesize($this->output) );
-    }
-
-    public function testBottomLeftPosition() {
-		$this->watermark->setPosition('bottomleft');
-        $this->watermarker->savePdf();
-        $this->assertTrue( file_exists($this->output) === true );
-		$this->assertTrue( filesize($this->parent_directory.'/../assets/output-bottomleft-position.pdf') === filesize($this->output) );
-    }
-
-    public function testAsBackground() {
-		$this->watermark->setAsBackground();
-        $this->watermarker->savePdf();
-        $this->assertTrue( file_exists($this->output) === true );
-		$this->assertTrue( filesize($this->parent_directory.'/../assets/output-as-background.pdf') === filesize($this->output) );
-    }
-
-    public function testSpecificPages() {
-		$this->watermarker_multiple->setPageRange(3,5);
-        $this->watermarker_multiple->savePdf();
-        $this->assertTrue( file_exists($this->output_multiple) === true );
-		$this->assertTrue( filesize($this->parent_directory.'/../assets/output-multipage.pdf') === filesize($this->output_multiple) );
-    }
-
-    public function testCustomPosition() {
-        $x = 50;
-        $y = 100;
-        $position = [$x, $y];
-        $this->watermark->setPosition($position);
-        $this->watermarker->savePdf();
-        $this->assertTrue( file_exists($this->output) === true );
-        $this->assertTrue( filesize($this->parent_directory.'/../assets/output-custom-position.pdf') === filesize($this->output) );
+        if (!$this->createReference) {
+            $this->assertTrue(filesize($reference) === filesize($this->outputFile));
+        }
     }
 }
